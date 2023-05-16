@@ -9,16 +9,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.Random;
-
 public class MainActivity extends AppCompatActivity {
 
-    private Button mButton;
     private EditText editTextNumber;
 
     private float height, width, centerH, centerW, unit, scale;
@@ -28,44 +24,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mButton = findViewById(R.id.mButton);
+        Button mButton = findViewById(R.id.mButton);
         editTextNumber = findViewById(R.id.editTextNumber);
 
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String input = editTextNumber.getText().toString();
-                if(input.length() > 0){
-                    scale = Float.parseFloat(input);
+        mButton.setOnClickListener(view -> {
+            String input = editTextNumber.getText().toString();
+            if(input.length() > 0){
+                scale = Float.parseFloat(input);
 
-                    if(scale > 4 || scale < 0.5){
-                        editTextNumber.setError("0,5 <= number <= 4");
-                    }else{
-                        myView v = new myView(MainActivity.this);
-                        height = findViewById(R.id.drawLayout).getMeasuredHeight();
-                        width = findViewById(R.id.drawLayout).getMeasuredWidth();
-                        centerH = height/2;
-                        centerW = width/2;
-                        unit = centerW/4 - width/50;
-
-                        Bitmap result = Bitmap.createBitmap((int)width, (int)height, Bitmap.Config.ARGB_8888);
-                        Canvas canvas1 = new Canvas(result);
-                        v.draw(canvas1);
-                        ConstraintLayout l = findViewById(R.id.drawLayout);
-                        l.addView(v);
-                    }
+                if(scale > 4 || scale < 0.5){
+                    editTextNumber.setError("0,5 <= number <= 4");
                 }else{
-                    editTextNumber.setError("Please enter a number");
-                }
+                    myView v = new myView(MainActivity.this);
+                    ConstraintLayout l = findViewById(R.id.drawLayout);
+                    height = l.getMeasuredHeight();
+                    width = l.getMeasuredWidth();
+                    centerH = height/2;
+                    centerW = width/2;
+                    unit = centerW/4 - width/50;
 
+                    Bitmap result = Bitmap.createBitmap((int)width, (int)height, Bitmap.Config.ARGB_8888);
+                    Canvas canvas1 = new Canvas(result);
+                    v.draw(canvas1);
+                    l.addView(v);
+                }
+            }else{
+                editTextNumber.setError("Please enter a number");
             }
+
         });
 
     }
 
     public class myView extends View {
 
-        private Paint myPaint;
+        private final Paint myPaint;
 
         public myView(Context context){
             super(context);
