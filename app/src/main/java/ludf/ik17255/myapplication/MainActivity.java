@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mButton;
     private EditText editTextNumber;
 
+    private float height, width, centerH, centerW, unit, scale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,26 +36,23 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String input = editTextNumber.getText().toString();
                 if(input.length() > 0){
-                    float scale = Float.parseFloat(input);
+                    scale = Float.parseFloat(input);
 
                     if(scale > 4 || scale < 0.5){
-                        editTextNumber.setError("Number should be greater than 0.5 and less than 4");
+                        editTextNumber.setError("0,5 <= number <= 4");
                     }else{
-
                         myView v = new myView(MainActivity.this);
-                        int height = findViewById(R.id.drawLayout).getMeasuredHeight();
-                        int width = findViewById(R.id.drawLayout).getMeasuredWidth();
-                        int padding = 10;
+                        height = findViewById(R.id.drawLayout).getMeasuredHeight();
+                        width = findViewById(R.id.drawLayout).getMeasuredWidth();
+                        centerH = height/2;
+                        centerW = width/2;
+                        unit = centerW/4 - width/50;
 
-                        Bitmap result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                        Bitmap result = Bitmap.createBitmap((int)width, (int)height, Bitmap.Config.ARGB_8888);
                         Canvas canvas1 = new Canvas(result);
                         v.draw(canvas1);
                         ConstraintLayout l = findViewById(R.id.drawLayout);
                         l.addView(v);
-
-
-                        //mButton.setText(String.valueOf(scale));
-                        mButton.setText(String.valueOf(height));
                     }
                 }else{
                     editTextNumber.setError("Please enter a number");
@@ -80,9 +79,8 @@ public class MainActivity extends AppCompatActivity {
             canvas.drawPaint(myPaint);
             myPaint.setColor(Color.BLACK);
             myPaint.setStyle(Paint.Style.STROKE);
-            myPaint.setStrokeWidth(10);
-            Random rand = new Random();
-            canvas.drawRect(rand.nextInt(300), rand.nextInt(300), rand.nextInt(300)+300, rand.nextInt(300)+300, myPaint);
+            myPaint.setStrokeWidth(12);
+            canvas.drawRect(centerW-scale*unit, centerH-scale*unit, centerW+scale*unit, centerH+scale*unit, myPaint);
         }
 
 
