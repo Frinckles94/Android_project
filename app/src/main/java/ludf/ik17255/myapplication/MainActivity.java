@@ -16,7 +16,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextNumber;
-
+    private ConstraintLayout l;
     private float height, width, centerH, centerW, unit, scale;
 
     @Override
@@ -26,6 +26,18 @@ public class MainActivity extends AppCompatActivity {
 
         Button mButton = findViewById(R.id.mButton);
         editTextNumber = findViewById(R.id.editTextNumber);
+        l = findViewById(R.id.drawLayout);
+
+
+        l.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            height = l.getMeasuredHeight();
+            width = l.getMeasuredWidth();
+            centerH = height/2;
+            centerW = width/2;
+            unit = centerW/4 - width/50;
+
+        });
+
 
         mButton.setOnClickListener(view -> {
             String input = editTextNumber.getText().toString();
@@ -36,13 +48,12 @@ public class MainActivity extends AppCompatActivity {
                     editTextNumber.setError("0,5 <= number <= 4");
                 }else{
                     myView v = new myView(MainActivity.this);
-                    ConstraintLayout l = findViewById(R.id.drawLayout);
+
                     height = l.getMeasuredHeight();
                     width = l.getMeasuredWidth();
                     centerH = height/2;
                     centerW = width/2;
                     unit = centerW/4 - width/50;
-
                     Bitmap result = Bitmap.createBitmap((int)width, (int)height, Bitmap.Config.ARGB_8888);
                     Canvas canvas1 = new Canvas(result);
                     v.draw(canvas1);
