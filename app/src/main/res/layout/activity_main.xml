@@ -9,24 +9,26 @@
 
     <EditText
         android:id="@+id/editTextNumber"
-        android:layout_width="122dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginBottom="52dp"
+        android:layout_width="122sp"
+        android:layout_height="48sp"
+        android:layout_marginStart="52sp"
+        android:layout_marginBottom="52sp"
         android:ems="10"
         android:hint="@string/enter_digit"
         android:inputType="numberDecimal"
+        android:textColorHint="@color/hint_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/mButton"
         app:layout_constraintHorizontal_bias="0.317"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/mButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="64sp"
+        android:layout_marginBottom="52sp"
         android:text="@string/draw"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
