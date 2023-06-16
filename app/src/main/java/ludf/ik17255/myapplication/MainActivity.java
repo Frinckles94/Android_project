@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout l;
     private myView v;
     private float height, width, centerH, centerW, unit;
+    private final SQLiteDB db = new SQLiteDB(MainActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button mButton = findViewById(R.id.mButton);
+        Button editButton = findViewById(R.id.buttonEdit);
         editTextNumber = findViewById(R.id.editTextNumber);
         l = findViewById(R.id.drawLayout);
 
@@ -63,12 +66,18 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        editButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, EditActivity.class);
+            startActivity(intent);
+        });
+
+
     }
 
     public class myView extends View {
 
         private final Paint myPaint;
-        private final List<Float> RectScaling;
+        private List<Float> RectScaling;
 
         public myView(Context context){
             super(context);
@@ -83,12 +92,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void addRectangle(float scalingC){
-            RectScaling.add(scalingC);
+            db.addRecord(scalingC);
             invalidate();
         }
 
         protected void onDraw(Canvas canvas){
             super.onDraw(canvas);
+            RectScaling = db.getScalingValues();
             for(float scalingC: RectScaling){
                 canvas.drawRect(centerW-scalingC*unit, centerH-scalingC*unit, centerW+scalingC*unit, centerH+scalingC*unit, myPaint);
             }

@@ -1,5 +1,15 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="enter_digit">Enter Digit</string>
+    <string name="edit">Edit</string>
     <string name="draw">Draw</string>
+    <string name="back">Back</string>
+    <string name="clear">Clear</string>
+    <string name="delete">Delete</string>
+    <string name="id">ID</string>
+    <string name="timestamp">Time Stamp</string>
+    <string name="scaling">Scaling Coefficient</string>
+    <string name="textview">TextView</string>
+    <string name="scale">Scaling</string>
+
 </resources>
